@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alert-plugin
+  namespace: kube-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alert-plugin
+  template:
+    metadata:
+      labels:
+        app: alert-plugin
+    spec:
+      containers:
+        - name: alert-plugin
+          image: harbor.daocloud.cn/etc/ww/alert-plugin:v1
+          ports:
+            - containerPort: 8080
+          env:
+            - name: FROM_EMAIL
+              valueFrom:
+                configMapKeyRef:
+                  name: alert-plugin-cm
+                  key: FROM_EMAIL
+            - name: TO_EMAIL
+              valueFrom:
+                configMapKeyRef:
+                  name: alert-plugin-cm
+                  key: TO_EMAIL
+            - name: SMTP_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: alert-plugin-cm
+                  key: SMTP_SERVER
+            - name: SMTP_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: alert-plugin-cm
+                  key: SMTP_PORT
+            - name: EMAIL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: alert-plugin-cm
+                  key: EMAIL_PASSWORD
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alert-plugin-cm
+  namespace: kube-system
+data:
+  FROM_EMAIL: "from@163.com"
+  TO_EMAIL: "test@163.com"
+  SMTP_SERVER: "10.1.1.1"
+  SMTP_PORT: "25"
+  EMAIL_PASSWORD: "as3qwda"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alert-plugin
+  namespace: kube-system
+spec:
+  selector:
+    app: alert-plugin
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
