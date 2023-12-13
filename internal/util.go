@@ -33,9 +33,12 @@ func init() {
 	AppConfigInstance.EmailPassword = GetEnvWithDefault("EMAIL_PASSWORD", "sadads1")
 	AppConfigInstance.NotificationMethod = GetEnvWithDefault("NOTIFICATION_METHOD", "smtp")
 	AppConfigInstance.MessageType = GetEnvWithDefault("WEBHOOK_MESSAGE_TYPE", "string")
-	AppConfigInstance.EnableWebhookAuth = GetEnvWithDefault("ENABLE_WEBHOOK_AUTH", "false") == "true"
-	AppConfigInstance.WebhookToken = GetEnvWithDefault("WEBHOOK_TOKEN", "")
-
+	enableWebhookAuth, err := strconv.ParseBool(GetEnvWithDefault("ENABLE_WEBHOOK_AUTH", "true"))
+	if err != nil {
+		log.Fatal(err)
+	}
+	AppConfigInstance.EnableWebhookAuth = enableWebhookAuth
+	AppConfigInstance.WebhookToken = GetEnvWithDefault("WEBHOOK_TOKEN", "KG3sda13")
 }
 
 func GetEnvWithDefault(key, defaultValue string) string {

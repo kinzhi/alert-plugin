@@ -9,7 +9,6 @@ import (
 )
 
 func authenticateWebhook(r *http.Request) bool {
-	log.Println("Webhook authentication")
 	// 如果认证未启用，直接返回true
 	if !AppConfigInstance.EnableWebhookAuth {
 		return true
