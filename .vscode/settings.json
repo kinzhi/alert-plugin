@@ -1,5 +1,0 @@
-{
-    "yaml.schemas": {
-        "https://json.schemastore.org/yamllint.json": "file:///Users/kinzhi/Documents/workspaces/alert-plugin/deploy/deploy.yaml"
-    }
-}
