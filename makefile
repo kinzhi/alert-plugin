@@ -11,10 +11,10 @@ run:
 	go run main.go
 
 docker-build:
-	docker build -t alert-plugin:v1 .
+	docker build -t alert-plugin:v1 --platform=linux/$(ARCH) .
 
 docker-run:
-	docker run -p 8080:8080  alert-plugin:v1
+	docker run -p 8080:8080 --platform=linux/$(ARCH) alert-plugin:v1
 
 clean:
 	rm -f alert-plugin
