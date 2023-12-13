@@ -44,6 +44,26 @@ spec:
                 configMapKeyRef:
                   name: alert-plugin-cm
                   key: EMAIL_PASSWORD
+            - name: NOTIFICATION_METHOD
+              valueFrom:
+                configMapKeyRef:
+                  name: alert-plugin-cm
+                  key: NOTIFICATION_METHOD
+            - name: WEBHOOK_MESSAGE_TYPE
+              valueFrom:
+                configMapKeyRef:
+                  name: alert-plugin-cm
+                  key: WEBHOOK_MESSAGE_TYPE
+            - name: ENABLE_WEBHOOK_AUTH
+              valueFrom:
+                configMapKeyRef:
+                  name: alert-plugin-cm
+                  key: ENABLE_WEBHOOK_AUTH
+            - name: WEBHOOK_TOKEN
+              valueFrom:
+                configMapKeyRef:
+                  name: alert-plugin-cm
+                  key: WEBHOOK_TOKEN
 
 ---
 apiVersion: v1
@@ -57,6 +77,10 @@ data:
   SMTP_SERVER: "10.1.1.1"
   SMTP_PORT: "25"
   EMAIL_PASSWORD: "as3qwda"
+  NOTIFICATION_METHOD: "smtp"
+  WEBHOOK_MESSAGE_TYPE: "string"
+  ENABLE_WEBHOOK_AUTH: "true"
+  WEBHOOK_TOKEN: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ"
 
 ---
 apiVersion: v1
